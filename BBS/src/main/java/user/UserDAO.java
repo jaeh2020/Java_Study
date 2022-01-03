@@ -14,12 +14,13 @@ public class UserDAO {
     
     public UserDAO(){ 
         try {
-            String dbURL = "jdbc:mysql://localhost:3306/BBS";
-            String dbID = "root";
+        	Class.forName("com.mysql.jdbc.Driver");
+        	String jdbcDriver = "jdbc:mysql://localhost:3306/BBS?" +
+        					"userUnicode=true&characterEncoding=euckr";
+            String dbID = "Board";
             String dbPassword = "java0000";
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-            
+            conn = DriverManager.getConnection(jdbcDriver, dbID, dbPassword);
+            System.out.println(conn + "<---conn");
         } catch (Exception e) {
             e.printStackTrace();
         }
