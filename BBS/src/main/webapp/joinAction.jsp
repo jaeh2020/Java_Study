@@ -19,15 +19,16 @@
 </head>
 <body>
     <%
-	    String userID = null;
-		if(session.getAttribute("userID") != null){
+	    String userID = null; // id값 초기화
+    
+		if(session.getAttribute("userID") != null){ 
 			userID = (String) session.getAttribute("userID");
 		}
 		if(userID != null){
 			PrintWriter script =response.getWriter();
 			script.println("<script>");
 			script.println("alert('이미로그인 되어있습니다.')");
-			script.println("location.href = 'main.jsp'");
+			script.println("location.href = 'main.jsp'"); // main.jsp로 전달
 			script.println("</script>");
 		}
 	
@@ -37,7 +38,7 @@
             PrintWriter script = response.getWriter();
             script.println("<script>");
             script.println("alert('입력이 안된 사항이 있습니다.')");
-            script.println("history.back()");
+            script.println("history.back()"); // 뒤로 돌린다.
             script.println("</script>");
     } else {
         UserDAO userDAO = new UserDAO();

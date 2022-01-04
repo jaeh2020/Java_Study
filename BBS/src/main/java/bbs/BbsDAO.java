@@ -5,26 +5,26 @@ import java.util.*;
  
 public class BbsDAO {
     private Connection conn;            // DB에 접근하는 객체
-    private ResultSet rs;                // DB data를 담을 수 있는 객체  (Ctrl + shift + 'o') -> auto import
+    private ResultSet rs;               // DB data를 담을 수 있는 객체  
     
     public BbsDAO(){ 
         try {
-        	String dbURL = "jdbc:mysql://localhost:3306/BBS?";
+        	String dbURL = "jdbc:mysql://localhost:3306/BBS?"; 
             String dbID = "root";
             String dbPassword = "java0000";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
             
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // 오류 체크
         }
     }
     public String getDate() // 현재시간을 넣어주기위해
     {
         String SQL = "SELECT NOW()"; // 현재시간을 나타내는 mysql
         try {
-            PreparedStatement pstmt = conn.prepareStatement(SQL);
-            rs = pstmt.executeQuery();
+            PreparedStatement pstmt = conn.prepareStatement(SQL); // 쿼리실행 문구
+            rs = pstmt.executeQuery(); // DB데이터를 pstmt에 담아서 쿼리실행
             if(rs.next()) {
                 return rs.getString(1);
             }
@@ -37,12 +37,12 @@ public class BbsDAO {
     
     public int getNext()
     {
-        String SQL = "SELECT bbsID FROM BBS ORDER BY bbsID DESC"; // 내림차순으로 가장 마지막에 쓰인 것을 가져온다
+        String SQL = "SELECT bbsID FROM BBS ORDER BY bbsID DESC"; // 내림차순으로 가장 마지막에 쓰인 것을 가져온다 (Desc)
         try {
-            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            PreparedStatement pstmt = conn.prepareStatement(SQL); // 쿼리 실행
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                return rs.getInt(1) + 1; // 그 다음 게시글의 번호
+                return rs.getInt(1) + 1; // 그 다음 게시글의 번호의 + 1
             }
             return 1; // 첫 번째 게시물인 경우
         } catch (Exception e) {
@@ -54,8 +54,8 @@ public class BbsDAO {
         String SQL = "INSERT INTO BBS VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(SQL);
-            pstmt.setInt(1, getNext());
-            pstmt.setString(2, bbsTitle);
+            pstmt.setInt(1, getNext()); // 1번째에 담겨있는 숫자를 1번에 배치
+            pstmt.setString(2, bbsTitle); // 2번째에 담겨있는 문자열를 2번에 배치
             pstmt.setString(3, userID);
             pstmt.setString(4, getDate());
             pstmt.setString(5, bbsContent);
@@ -66,7 +66,7 @@ public class BbsDAO {
         }
         return -1; // 데이터베이스 오류
     }
-    public ArrayList<Bbs> getList(int pageNumber)
+    public ArrayList<Bbs> getList(int pageNumber) // bbs를 배열의 형태로 받음
     {
         String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10"; // 내림차순으로 가장 마지막에 쓰인 것을 가져온다
         ArrayList<Bbs> list = new ArrayList<Bbs>();
@@ -91,7 +91,7 @@ public class BbsDAO {
     }
 //    페이징 처리를 위한 함수
     public boolean nextPage(int pageNumber) {
-        String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1"; 
+        String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1"; // 삭제되지 않은것 표현 bbsAvailable
         try {
             PreparedStatement pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, getNext() - (pageNumber - 1 ) * 10);

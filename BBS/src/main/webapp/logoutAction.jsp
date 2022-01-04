@@ -9,7 +9,7 @@
 <body>
 
 	<%
-		session.invalidate();
+		session.invalidate(); // 세션을 잃게 하고 main.jsp로 전달
 	%>
 	<script>
 		location.href = 'main.jsp';

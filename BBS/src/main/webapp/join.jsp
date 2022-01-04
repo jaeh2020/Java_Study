@@ -14,7 +14,7 @@
             <button type="button" class="navbar-toggle collapsed"
                 data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
                 aria-expand="false">
-                <span class ="icon-bar"></span> <!-- 줄였을때 옆에 짝대기 -->
+                <span class ="icon-bar"></span> 
                 <span class ="icon-bar"></span>
                 <span class ="icon-bar"></span>
             </button>

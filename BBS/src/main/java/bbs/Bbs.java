@@ -1,9 +1,9 @@
 package bbs;
 
 public class Bbs {
-	private int bbsID;
+	private int bbsID; // 게시판 Primary key 
 	private String bbsTitle;
-	private String userID;
+	private String userID; // 회원가입 
 	private String bbsDate;
 	private String bbsContent;
 	private int bbsAvailable;
